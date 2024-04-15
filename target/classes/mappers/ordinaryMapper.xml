@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.gymnasium.mapper.ordinaryMapper">
+  <resultMap id="BaseResultMap" type="com.example.gymnasium.entity.ordinary">
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="ordinarynum" jdbcType="VARCHAR" property="ordinarynum" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ordinary
+    where ordinarynum = #{ordinarynum,jdbcType=VARCHAR}
+  </delete>
+
+  <select id="selectByPrimaryKey" resultType="com.example.gymnasium.entity.ordinary" resultMap="BaseResultMap">
+    SELECT * FROM ordinary WHERE ordinarynum=#{param1}
+  </select>
+
+  <select id="selectByuserid" resultType="com.example.gymnasium.entity.ordinary" resultMap="BaseResultMap">
+    SELECT * FROM ordinary WHERE userid=#{param1}
+  </select>
+
+  <select id="findall" resultType="com.example.gymnasium.entity.ordinary" resultMap="BaseResultMap">
+    SELECT * FROM ordinary
+  </select>
+
+  <insert id="register" parameterType="com.example.gymnasium.entity.ordinary" >
+    insert into ordinary (userid, ordinarynum)
+    values (#{userid,jdbcType=INTEGER}, #{ordinarynum,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="uptOrdnumberById" parameterType="com.example.gymnasium.entity.ordinary">
+    update ordinary
+    set ordinarynum = #{ordinarynum,jdbcType=VARCHAR}
+    where userid = #{userid,jdbcType=INTEGER}
+  </update>
+
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    delete u,a from ordinary as u LEFT JOIN user as a ON u.userid = a.userid WHERE u.userid= #{param1}
+  </delete>
+
+  <insert id="insert" parameterType="com.example.gymnasium.entity.ordinary">
+    insert into ordinary (userid,ordinarynum)
+    values (#{userid,jdbcType=INTEGER},#{ordinarynum,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.gymnasium.entity.ordinary">
+    insert into ordinary
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="ordinarynum != null">
+        ordinarynum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="ordinarynum != null">
+        #{ordinarynum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

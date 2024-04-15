@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.gymnasium.mapper.ruleMapper">
+  <resultMap id="BaseResultMap" type="com.example.gymnasium.entity.rule">
+    <id column="ruleid" jdbcType="INTEGER" property="ruleid" />
+    <result column="venueid" jdbcType="INTEGER" property="venueid" />
+    <result column="courttype" jdbcType="INTEGER" property="courttype" />
+    <result column="holidayornot" jdbcType="INTEGER" property="holidayornot" />
+    <result column="begintime" jdbcType="INTEGER" property="begintime" />
+    <result column="endtime" jdbcType="INTEGER" property="endtime" />
+    <result column="capacity" jdbcType="INTEGER" property="capacity" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="discount" jdbcType="DECIMAL" property="discount" />
+    <result column="userstatus" jdbcType="VARCHAR" property="userstatus" />
+    <result column="cardgrade" jdbcType="INTEGER" property="cardgrade" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ruleid, venueid, courttype, holidayornot, begintime, endtime, capacity, price, discount, 
+    userstatus, cardgrade
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rule
+    where ruleid = #{ruleid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from rule
+    where ruleid = #{ruleid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.gymnasium.entity.rule">
+    insert into rule (ruleid, venueid, courttype, 
+      holidayornot, begintime, endtime, 
+      capacity, price, discount, 
+      userstatus, cardgrade)
+    values (#{ruleid,jdbcType=INTEGER}, #{venueid,jdbcType=INTEGER}, #{courttype,jdbcType=INTEGER}, 
+      #{holidayornot,jdbcType=INTEGER}, #{begintime,jdbcType=INTEGER}, #{endtime,jdbcType=INTEGER}, 
+      #{capacity,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, #{discount,jdbcType=DECIMAL}, 
+      #{userstatus,jdbcType=VARCHAR}, #{cardgrade,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.gymnasium.entity.rule">
+    insert into rule
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ruleid != null">
+        ruleid,
+      </if>
+      <if test="venueid != null">
+        venueid,
+      </if>
+      <if test="courttype != null">
+        courttype,
+      </if>
+      <if test="holidayornot != null">
+        holidayornot,
+      </if>
+      <if test="begintime != null">
+        begintime,
+      </if>
+      <if test="endtime != null">
+        endtime,
+      </if>
+      <if test="capacity != null">
+        capacity,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="discount != null">
+        discount,
+      </if>
+      <if test="userstatus != null">
+        userstatus,
+      </if>
+      <if test="cardgrade != null">
+        cardgrade,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ruleid != null">
+        #{ruleid,jdbcType=INTEGER},
+      </if>
+      <if test="venueid != null">
+        #{venueid,jdbcType=INTEGER},
+      </if>
+      <if test="courttype != null">
+        #{courttype,jdbcType=INTEGER},
+      </if>
+      <if test="holidayornot != null">
+        #{holidayornot,jdbcType=INTEGER},
+      </if>
+      <if test="begintime != null">
+        #{begintime,jdbcType=INTEGER},
+      </if>
+      <if test="endtime != null">
+        #{endtime,jdbcType=INTEGER},
+      </if>
+      <if test="capacity != null">
+        #{capacity,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null">
+        #{discount,jdbcType=DECIMAL},
+      </if>
+      <if test="userstatus != null">
+        #{userstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="cardgrade != null">
+        #{cardgrade,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.gymnasium.entity.rule">
+    update rule
+    <set>
+      <if test="venueid != null">
+        venueid = #{venueid,jdbcType=INTEGER},
+      </if>
+      <if test="courttype != null">
+        courttype = #{courttype,jdbcType=INTEGER},
+      </if>
+      <if test="holidayornot != null">
+        holidayornot = #{holidayornot,jdbcType=INTEGER},
+      </if>
+      <if test="begintime != null">
+        begintime = #{begintime,jdbcType=INTEGER},
+      </if>
+      <if test="endtime != null">
+        endtime = #{endtime,jdbcType=INTEGER},
+      </if>
+      <if test="capacity != null">
+        capacity = #{capacity,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null">
+        discount = #{discount,jdbcType=DECIMAL},
+      </if>
+      <if test="userstatus != null">
+        userstatus = #{userstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="cardgrade != null">
+        cardgrade = #{cardgrade,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ruleid = #{ruleid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.gymnasium.entity.rule">
+    update rule
+    set venueid = #{venueid,jdbcType=INTEGER},
+      courttype = #{courttype,jdbcType=INTEGER},
+      holidayornot = #{holidayornot,jdbcType=INTEGER},
+      begintime = #{begintime,jdbcType=INTEGER},
+      endtime = #{endtime,jdbcType=INTEGER},
+      capacity = #{capacity,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
+      discount = #{discount,jdbcType=DECIMAL},
+      userstatus = #{userstatus,jdbcType=VARCHAR},
+      cardgrade = #{cardgrade,jdbcType=INTEGER}
+    where ruleid = #{ruleid,jdbcType=INTEGER}
+  </update>
+</mapper>

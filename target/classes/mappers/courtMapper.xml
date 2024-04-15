@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.gymnasium.mapper.courtMapper">
+  <resultMap id="BaseResultMap" type="com.example.gymnasium.entity.court">
+    <id column="courtid" jdbcType="INTEGER" property="courtid" />
+    <result column="venueid" jdbcType="INTEGER" property="venueid" />
+    <result column="courttype" jdbcType="INTEGER" property="courttype" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="courtisdel" jdbcType="INTEGER" property="courtisdel" />
+    <result column="courtx1" jdbcType="DECIMAL" property="courtx1" />
+    <result column="courty1" jdbcType="DECIMAL" property="courty1" />
+    <result column="courtx2" jdbcType="DECIMAL" property="courtx2" />
+    <result column="courty2" jdbcType="DECIMAL" property="courty2" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.gymnasium.entity.court">
+    <result column="picture" jdbcType="LONGVARBINARY" property="picture" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    courtid, venueid, courttype, name, courtisdel, courtx1, courty1, courtx2, courty2
+  </sql>
+  <sql id="Blob_Column_List">
+    picture
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from court
+    where courtid = #{courtid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from court
+    where courtid = #{courtid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.gymnasium.entity.court">
+    insert into court (courtid, venueid, courttype, 
+      name, courtisdel, courtx1, 
+      courty1, courtx2, courty2, 
+      picture)
+    values (#{courtid,jdbcType=INTEGER}, #{venueid,jdbcType=INTEGER}, #{courttype,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{courtisdel,jdbcType=INTEGER}, #{courtx1,jdbcType=DECIMAL}, 
+      #{courty1,jdbcType=DECIMAL}, #{courtx2,jdbcType=DECIMAL}, #{courty2,jdbcType=DECIMAL}, 
+      #{picture,jdbcType=LONGVARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.gymnasium.entity.court">
+    insert into court
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="courtid != null">
+        courtid,
+      </if>
+      <if test="venueid != null">
+        venueid,
+      </if>
+      <if test="courttype != null">
+        courttype,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="courtisdel != null">
+        courtisdel,
+      </if>
+      <if test="courtx1 != null">
+        courtx1,
+      </if>
+      <if test="courty1 != null">
+        courty1,
+      </if>
+      <if test="courtx2 != null">
+        courtx2,
+      </if>
+      <if test="courty2 != null">
+        courty2,
+      </if>
+      <if test="picture != null">
+        picture,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="courtid != null">
+        #{courtid,jdbcType=INTEGER},
+      </if>
+      <if test="venueid != null">
+        #{venueid,jdbcType=INTEGER},
+      </if>
+      <if test="courttype != null">
+        #{courttype,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="courtisdel != null">
+        #{courtisdel,jdbcType=INTEGER},
+      </if>
+      <if test="courtx1 != null">
+        #{courtx1,jdbcType=DECIMAL},
+      </if>
+      <if test="courty1 != null">
+        #{courty1,jdbcType=DECIMAL},
+      </if>
+      <if test="courtx2 != null">
+        #{courtx2,jdbcType=DECIMAL},
+      </if>
+      <if test="courty2 != null">
+        #{courty2,jdbcType=DECIMAL},
+      </if>
+      <if test="picture != null">
+        #{picture,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.gymnasium.entity.court">
+    update court
+    <set>
+      <if test="venueid != null">
+        venueid = #{venueid,jdbcType=INTEGER},
+      </if>
+      <if test="courttype != null">
+        courttype = #{courttype,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="courtisdel != null">
+        courtisdel = #{courtisdel,jdbcType=INTEGER},
+      </if>
+      <if test="courtx1 != null">
+        courtx1 = #{courtx1,jdbcType=DECIMAL},
+      </if>
+      <if test="courty1 != null">
+        courty1 = #{courty1,jdbcType=DECIMAL},
+      </if>
+      <if test="courtx2 != null">
+        courtx2 = #{courtx2,jdbcType=DECIMAL},
+      </if>
+      <if test="courty2 != null">
+        courty2 = #{courty2,jdbcType=DECIMAL},
+      </if>
+      <if test="picture != null">
+        picture = #{picture,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where courtid = #{courtid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.gymnasium.entity.court">
+    update court
+    set venueid = #{venueid,jdbcType=INTEGER},
+      courttype = #{courttype,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      courtisdel = #{courtisdel,jdbcType=INTEGER},
+      courtx1 = #{courtx1,jdbcType=DECIMAL},
+      courty1 = #{courty1,jdbcType=DECIMAL},
+      courtx2 = #{courtx2,jdbcType=DECIMAL},
+      courty2 = #{courty2,jdbcType=DECIMAL},
+      picture = #{picture,jdbcType=LONGVARBINARY}
+    where courtid = #{courtid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.gymnasium.entity.court">
+    update court
+    set venueid = #{venueid,jdbcType=INTEGER},
+      courttype = #{courttype,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      courtisdel = #{courtisdel,jdbcType=INTEGER},
+      courtx1 = #{courtx1,jdbcType=DECIMAL},
+      courty1 = #{courty1,jdbcType=DECIMAL},
+      courtx2 = #{courtx2,jdbcType=DECIMAL},
+      courty2 = #{courty2,jdbcType=DECIMAL}
+    where courtid = #{courtid,jdbcType=INTEGER}
+  </update>
+</mapper>

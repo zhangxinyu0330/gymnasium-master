@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.gymnasium.mapper.orderMapper">
+  <resultMap id="BaseResultMap" type="com.example.gymnasium.entity.order">
+    <id column="orderid" jdbcType="INTEGER" property="orderid" />
+    <result column="venueid" jdbcType="INTEGER" property="venueid" />
+    <result column="courtid" jdbcType="INTEGER" property="courtid" />
+    <result column="ordernumber" jdbcType="VARCHAR" property="ordernumber" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="date" jdbcType="DATE" property="date" />
+    <result column="begintime" jdbcType="INTEGER" property="begintime" />
+    <result column="endtime" jdbcType="INTEGER" property="endtime" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="maketime" jdbcType="TIMESTAMP" property="maketime" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    orderid, venueid, courtid, ordernumber, userid, date, begintime, endtime, state, 
+    maketime, price
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from order
+    where orderid = #{orderid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from order
+    where orderid = #{orderid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.gymnasium.entity.order">
+    insert into order (orderid, venueid, courtid, 
+      ordernumber, userid, date, 
+      begintime, endtime, state, 
+      maketime, price)
+    values (#{orderid,jdbcType=INTEGER}, #{venueid,jdbcType=INTEGER}, #{courtid,jdbcType=INTEGER}, 
+      #{ordernumber,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER}, #{date,jdbcType=DATE}, 
+      #{begintime,jdbcType=INTEGER}, #{endtime,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, 
+      #{maketime,jdbcType=TIMESTAMP}, #{price,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.gymnasium.entity.order">
+    insert into order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderid != null">
+        orderid,
+      </if>
+      <if test="venueid != null">
+        venueid,
+      </if>
+      <if test="courtid != null">
+        courtid,
+      </if>
+      <if test="ordernumber != null">
+        ordernumber,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="begintime != null">
+        begintime,
+      </if>
+      <if test="endtime != null">
+        endtime,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="maketime != null">
+        maketime,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderid != null">
+        #{orderid,jdbcType=INTEGER},
+      </if>
+      <if test="venueid != null">
+        #{venueid,jdbcType=INTEGER},
+      </if>
+      <if test="courtid != null">
+        #{courtid,jdbcType=INTEGER},
+      </if>
+      <if test="ordernumber != null">
+        #{ordernumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="begintime != null">
+        #{begintime,jdbcType=INTEGER},
+      </if>
+      <if test="endtime != null">
+        #{endtime,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="maketime != null">
+        #{maketime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.gymnasium.entity.order">
+    update order
+    <set>
+      <if test="venueid != null">
+        venueid = #{venueid,jdbcType=INTEGER},
+      </if>
+      <if test="courtid != null">
+        courtid = #{courtid,jdbcType=INTEGER},
+      </if>
+      <if test="ordernumber != null">
+        ordernumber = #{ordernumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="begintime != null">
+        begintime = #{begintime,jdbcType=INTEGER},
+      </if>
+      <if test="endtime != null">
+        endtime = #{endtime,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="maketime != null">
+        maketime = #{maketime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where orderid = #{orderid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.gymnasium.entity.order">
+    update order
+    set venueid = #{venueid,jdbcType=INTEGER},
+      courtid = #{courtid,jdbcType=INTEGER},
+      ordernumber = #{ordernumber,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=INTEGER},
+      date = #{date,jdbcType=DATE},
+      begintime = #{begintime,jdbcType=INTEGER},
+      endtime = #{endtime,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER},
+      maketime = #{maketime,jdbcType=TIMESTAMP},
+      price = #{price,jdbcType=DECIMAL}
+    where orderid = #{orderid,jdbcType=INTEGER}
+  </update>
+</mapper>

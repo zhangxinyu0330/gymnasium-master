@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.gymnasium.mapper.venueMapper">
+  <resultMap id="BaseResultMap" type="com.example.gymnasium.entity.venue">
+    <id column="venueid" jdbcType="INTEGER" property="venueid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
+    <result column="venueisdel" jdbcType="INTEGER" property="venueisdel" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.gymnasium.entity.venue">
+    <result column="picture" jdbcType="LONGVARBINARY" property="picture" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    venueid, name, introduction, venueisdel
+  </sql>
+  <sql id="Blob_Column_List">
+    picture
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from venue
+    where venueid = #{venueid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from venue
+    where venueid = #{venueid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.gymnasium.entity.venue">
+    insert into venue (venueid, name, introduction, 
+      venueisdel, picture)
+    values (#{venueid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{introduction,jdbcType=VARCHAR}, 
+      #{venueisdel,jdbcType=INTEGER}, #{picture,jdbcType=LONGVARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.gymnasium.entity.venue">
+    insert into venue
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="venueid != null">
+        venueid,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="introduction != null">
+        introduction,
+      </if>
+      <if test="venueisdel != null">
+        venueisdel,
+      </if>
+      <if test="picture != null">
+        picture,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="venueid != null">
+        #{venueid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null">
+        #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="venueisdel != null">
+        #{venueisdel,jdbcType=INTEGER},
+      </if>
+      <if test="picture != null">
+        #{picture,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.gymnasium.entity.venue">
+    update venue
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null">
+        introduction = #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="venueisdel != null">
+        venueisdel = #{venueisdel,jdbcType=INTEGER},
+      </if>
+      <if test="picture != null">
+        picture = #{picture,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where venueid = #{venueid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.gymnasium.entity.venue">
+    update venue
+    set name = #{name,jdbcType=VARCHAR},
+      introduction = #{introduction,jdbcType=VARCHAR},
+      venueisdel = #{venueisdel,jdbcType=INTEGER},
+      picture = #{picture,jdbcType=LONGVARBINARY}
+    where venueid = #{venueid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.gymnasium.entity.venue">
+    update venue
+    set name = #{name,jdbcType=VARCHAR},
+      introduction = #{introduction,jdbcType=VARCHAR},
+      venueisdel = #{venueisdel,jdbcType=INTEGER}
+    where venueid = #{venueid,jdbcType=INTEGER}
+  </update>
+</mapper>

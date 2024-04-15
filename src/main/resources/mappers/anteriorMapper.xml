@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.gymnasium.mapper.anteriorMapper">
+  <resultMap id="BaseResultMap" type="com.example.gymnasium.entity.anterior">
+    <id column="anteriorid" jdbcType="INTEGER" property="anteriorid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    anteriorid, name, password
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from anterior
+    where anteriorid = #{anteriorid,jdbcType=INTEGER}
+  </select>
+
+  <select id="findall" resultType="com.example.gymnasium.entity.anterior" resultMap="BaseResultMap">
+    SELECT * FROM anterior
+  </select>
+
+  <select id="login" resultType="com.example.gymnasium.entity.anterior" resultMap="BaseResultMap">
+    SELECT * FROM anterior WHERE name=#{param1} AND password=#{param2}
+  </select>
+
+  <select id="selectByName" resultType="com.example.gymnasium.entity.anterior" resultMap="BaseResultMap">
+    SELECT * FROM anterior WHERE name=#{param1}
+  </select>
+
+  <update id="uptAnNameById" parameterType="com.example.gymnasium.entity.anterior">
+    update anterior
+    set name = #{name,jdbcType=VARCHAR}
+    where anteriorid = #{anteriorid,jdbcType=INTEGER}
+  </update>
+
+  <update id="uptAnPwdById" parameterType="com.example.gymnasium.entity.anterior">
+    update anterior
+    set password = #{password,jdbcType=VARCHAR}
+    where anteriorid = #{anteriorid,jdbcType=INTEGER}
+  </update>
+
+  <insert id="register" parameterType="com.example.gymnasium.entity.anterior" useGeneratedKeys="true" keyProperty="anteriorid">
+    insert into anterior (name, password)
+    values ( #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})
+  </insert>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from anterior
+    where anteriorid = #{anteriorid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.gymnasium.entity.anterior">
+    insert into anterior (anteriorid, name, password
+    )
+    values (#{anteriorid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}
+           )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.gymnasium.entity.anterior">
+    insert into anterior
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="anteriorid != null">
+        anteriorid,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="anteriorid != null">
+        #{anteriorid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.gymnasium.entity.anterior">
+    update anterior
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where anteriorid = #{anteriorid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.gymnasium.entity.anterior">
+    update anterior
+    set name = #{name,jdbcType=VARCHAR},
+        password = #{password,jdbcType=VARCHAR}
+    where anteriorid = #{anteriorid,jdbcType=INTEGER}
+  </update>
+</mapper>

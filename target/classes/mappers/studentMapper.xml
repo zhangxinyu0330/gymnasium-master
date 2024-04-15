@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.gymnasium.mapper.studentMapper">
+  <resultMap id="BaseResultMap" type="com.example.gymnasium.entity.student">
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="studentnumber" jdbcType="VARCHAR" property="studentnumber" />
+    <result column="grade" jdbcType="INTEGER" property="grade" />
+    <result column="period" jdbcType="INTEGER" property="period" />
+    <result column="colleague" jdbcType="VARCHAR" property="colleague" />
+    <result column="subject" jdbcType="VARCHAR" property="subject" />
+  </resultMap>
+  <insert id="insert" parameterType="com.example.gymnasium.entity.student">
+    insert into student (userid, studentnumber, grade,
+                         period, colleague, subject
+    )
+    values (#{userid,jdbcType=INTEGER}, #{studentnumber,jdbcType=VARCHAR}, #{grade,jdbcType=INTEGER},
+            #{period,jdbcType=INTEGER}, #{colleague,jdbcType=VARCHAR}, #{subject,jdbcType=VARCHAR}
+           )
+  </insert>
+
+  <select id="selectByPrimaryKey" resultType="com.example.gymnasium.entity.student" resultMap="BaseResultMap">
+    SELECT * FROM student WHERE studentnumber=#{param1}
+  </select>
+
+  <insert id="register" parameterType="com.example.gymnasium.entity.student" >
+    insert into student (userid, studentnumber, grade,
+                         period, colleague, subject)
+    values (#{userid,jdbcType=INTEGER}, #{studentnumber,jdbcType=VARCHAR}, #{grade,jdbcType=INTEGER},
+            #{period,jdbcType=INTEGER}, #{colleague,jdbcType=VARCHAR}, #{subject,jdbcType=VARCHAR}
+           )
+  </insert>
+
+  <select id="findall" resultType="com.example.gymnasium.entity.student" resultMap="BaseResultMap">
+    SELECT * FROM student
+  </select>
+
+  <select id="selectByuserid" resultType="com.example.gymnasium.entity.student" resultMap="BaseResultMap">
+    SELECT * FROM student WHERE userid=#{param1}
+  </select>
+
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    delete u,a from student as u LEFT JOIN user as a ON u.userid = a.userid WHERE u.userid= #{param1}
+  </delete>
+
+  <update id="uptStuGardeByKey" parameterType="com.example.gymnasium.entity.student">
+    update student
+    set grade = #{grade,jdbcType=INTEGER}
+    where studentnumber = #{studentnumber,jdbcType=VARCHAR}
+  </update>
+
+  <update id="uptStuPeriodByKey" parameterType="com.example.gymnasium.entity.student">
+    update student
+    set period = #{period,jdbcType=INTEGER}
+    where studentnumber = #{studentnumber,jdbcType=VARCHAR}
+  </update>
+
+  <update id="uptStuColledgeByKey" parameterType="com.example.gymnasium.entity.student">
+    update student
+    set colleague = #{colleague,jdbcType=VARCHAR}
+    where studentnumber = #{studentnumber,jdbcType=VARCHAR}
+  </update>
+
+  <update id="uptStuSubByKey" parameterType="com.example.gymnasium.entity.student">
+    update student
+    set subject = #{subject,jdbcType=VARCHAR}
+    where studentnumber = #{studentnumber,jdbcType=VARCHAR}
+  </update>
+
+  <insert id="insertSelective" parameterType="com.example.gymnasium.entity.student">
+    insert into student
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="studentnumber != null">
+        studentnumber,
+      </if>
+      <if test="grade != null">
+        grade,
+      </if>
+      <if test="period != null">
+        period,
+      </if>
+      <if test="colleague != null">
+        colleague,
+      </if>
+      <if test="subject != null">
+        subject,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="studentnumber != null">
+        #{studentnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null">
+        #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="period != null">
+        #{period,jdbcType=INTEGER},
+      </if>
+      <if test="colleague != null">
+        #{colleague,jdbcType=VARCHAR},
+      </if>
+      <if test="subject != null">
+        #{subject,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+</mapper>

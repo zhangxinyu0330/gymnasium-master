@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.gymnasium.mapper.reservationMapper">
+  <resultMap id="BaseResultMap" type="com.example.gymnasium.entity.reservation">
+    <id column="reservationid" jdbcType="INTEGER" property="reservationid" />
+    <result column="venueid" jdbcType="INTEGER" property="venueid" />
+    <result column="courtid" jdbcType="INTEGER" property="courtid" />
+    <result column="date" jdbcType="DATE" property="date" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    reservationid, venueid, courtid, date, state
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from reservation
+    where reservationid = #{reservationid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from reservation
+    where reservationid = #{reservationid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.gymnasium.entity.reservation">
+    insert into reservation (reservationid, venueid, courtid, 
+      date, state)
+    values (#{reservationid,jdbcType=INTEGER}, #{venueid,jdbcType=INTEGER}, #{courtid,jdbcType=INTEGER}, 
+      #{date,jdbcType=DATE}, #{state,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.gymnasium.entity.reservation">
+    insert into reservation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="reservationid != null">
+        reservationid,
+      </if>
+      <if test="venueid != null">
+        venueid,
+      </if>
+      <if test="courtid != null">
+        courtid,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="reservationid != null">
+        #{reservationid,jdbcType=INTEGER},
+      </if>
+      <if test="venueid != null">
+        #{venueid,jdbcType=INTEGER},
+      </if>
+      <if test="courtid != null">
+        #{courtid,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.gymnasium.entity.reservation">
+    update reservation
+    <set>
+      <if test="venueid != null">
+        venueid = #{venueid,jdbcType=INTEGER},
+      </if>
+      <if test="courtid != null">
+        courtid = #{courtid,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where reservationid = #{reservationid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.gymnasium.entity.reservation">
+    update reservation
+    set venueid = #{venueid,jdbcType=INTEGER},
+      courtid = #{courtid,jdbcType=INTEGER},
+      date = #{date,jdbcType=DATE},
+      state = #{state,jdbcType=VARCHAR}
+    where reservationid = #{reservationid,jdbcType=INTEGER}
+  </update>
+
+</mapper>

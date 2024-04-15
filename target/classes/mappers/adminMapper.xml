@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.gymnasium.mapper.adminMapper">
+  <resultMap id="BaseResultMap" type="com.example.gymnasium.entity.admin">
+    <id column="adminid" jdbcType="INTEGER" property="adminid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    adminid, name, password
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from `admin`
+    where adminid = #{adminid,jdbcType=INTEGER}
+  </select>
+
+  <select id="findall" resultType="com.example.gymnasium.entity.admin" resultMap="BaseResultMap">
+    SELECT * FROM `admin`
+  </select>
+
+  <select id="login" resultType="com.example.gymnasium.entity.admin" resultMap="BaseResultMap">
+    SELECT * FROM `admin` WHERE name=#{param1} AND password=#{param2}
+  </select>
+
+  <select id="selectByName" resultType="com.example.gymnasium.entity.admin" resultMap="BaseResultMap">
+    SELECT * FROM `admin` WHERE name=#{param1}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from `admin`
+    where adminid = #{adminid,jdbcType=INTEGER}
+  </delete>
+
+  <update id="uptAdNameById" parameterType="com.example.gymnasium.entity.admin">
+    update `admin`
+    set name = #{name,jdbcType=VARCHAR}
+    where adminid = #{adminid,jdbcType=INTEGER}
+  </update>
+
+  <update id="uptAdPwdById" parameterType="com.example.gymnasium.entity.admin">
+    update `admin`
+    set password = #{password,jdbcType=VARCHAR}
+    where adminid = #{adminid,jdbcType=INTEGER}
+  </update>
+
+  <insert id="register" parameterType="com.example.gymnasium.entity.admin" useGeneratedKeys="true" keyProperty="adminid">
+    insert into `admin` (name, password)
+    values ( #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})
+  </insert>
+
+  <insert id="insert" parameterType="com.example.gymnasium.entity.admin">
+    insert into `admin` (adminid, name, password
+    )
+    values (#{adminid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}
+           )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.gymnasium.entity.admin">
+    insert into `admin`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="adminid != null">
+        adminid,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="adminid != null">
+        #{adminid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.gymnasium.entity.admin">
+    update `admin`
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where adminid = #{adminid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.gymnasium.entity.admin">
+    update `admin`
+    set name = #{name,jdbcType=VARCHAR},
+        password = #{password,jdbcType=VARCHAR}
+    where adminid = #{adminid,jdbcType=INTEGER}
+  </update>
+</mapper>

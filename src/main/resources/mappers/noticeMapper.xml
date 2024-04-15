@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.gymnasium.mapper.noticeMapper">
+  <resultMap id="BaseResultMap" type="com.example.gymnasium.entity.notice">
+    <id column="noticeid" jdbcType="INTEGER" property="noticeid" />
+    <result column="noticetime" jdbcType="DATE" property="noticetime" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="venueid" jdbcType="INTEGER" property="venueid" />
+    <result column="noticeisdel" jdbcType="INTEGER" property="noticeisdel" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    noticeid, noticetime, content, title, state, venueid, noticeisdel
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from notice
+    where noticeid = #{noticeid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from notice
+    where noticeid = #{noticeid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.gymnasium.entity.notice">
+    insert into notice (noticeid, noticetime, content, 
+      title, state, venueid, 
+      noticeisdel)
+    values (#{noticeid,jdbcType=INTEGER}, #{noticetime,jdbcType=DATE}, #{content,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{venueid,jdbcType=INTEGER}, 
+      #{noticeisdel,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.gymnasium.entity.notice">
+    insert into notice
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="noticeid != null">
+        noticeid,
+      </if>
+      <if test="noticetime != null">
+        noticetime,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="venueid != null">
+        venueid,
+      </if>
+      <if test="noticeisdel != null">
+        noticeisdel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="noticeid != null">
+        #{noticeid,jdbcType=INTEGER},
+      </if>
+      <if test="noticetime != null">
+        #{noticetime,jdbcType=DATE},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="venueid != null">
+        #{venueid,jdbcType=INTEGER},
+      </if>
+      <if test="noticeisdel != null">
+        #{noticeisdel,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.gymnasium.entity.notice">
+    update notice
+    <set>
+      <if test="noticetime != null">
+        noticetime = #{noticetime,jdbcType=DATE},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="venueid != null">
+        venueid = #{venueid,jdbcType=INTEGER},
+      </if>
+      <if test="noticeisdel != null">
+        noticeisdel = #{noticeisdel,jdbcType=INTEGER},
+      </if>
+    </set>
+    where noticeid = #{noticeid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.gymnasium.entity.notice">
+    update notice
+    set noticetime = #{noticetime,jdbcType=DATE},
+      content = #{content,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      venueid = #{venueid,jdbcType=INTEGER},
+      noticeisdel = #{noticeisdel,jdbcType=INTEGER}
+    where noticeid = #{noticeid,jdbcType=INTEGER}
+  </update>
+</mapper>

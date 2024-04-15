@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.gymnasium.mapper.userMapper">
+  <resultMap id="BaseResultMap" type="com.example.gymnasium.entity.user">
+    <id column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="cardid" jdbcType="INTEGER" property="cardid" />
+    <result column="phonenumber" jdbcType="INTEGER" property="phonenumber" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.gymnasium.entity.user">
+    <result column="headpic" jdbcType="LONGVARBINARY" property="headpic" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    userid, username, password, status, cardid, phonenumber
+  </sql>
+  <sql id="Blob_Column_List">
+    headpic
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from user
+    where userid = #{userid,jdbcType=INTEGER}
+  </select>
+
+  <select id="findall" resultType="com.example.gymnasium.entity.user" resultMap="BaseResultMap">
+    SELECT * FROM user
+  </select>
+
+  <select id="login" resultType="com.example.gymnasium.entity.user" resultMap="BaseResultMap">
+    SELECT * FROM user WHERE username=#{param1} AND password=#{param2}
+  </select>
+
+  <select id="selectUserByName" resultType="com.example.gymnasium.entity.user" resultMap="BaseResultMap">
+    SELECT * FROM user WHERE username=#{param1}
+  </select>
+
+  <select id="selectUserById" resultType="com.example.gymnasium.entity.user" resultMap="BaseResultMap">
+    SELECT * FROM user WHERE userid=#{param1}
+  </select>
+
+  <select id="selectUserStateById" resultType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT status FROM user WHERE userid=#{param1}
+  </select>
+
+  <insert id="register" parameterType="com.example.gymnasium.entity.user" useGeneratedKeys="true" keyProperty="userid">
+    insert into user (username, password,
+                      status, cardid, phonenumber,
+                      headpic)
+    values ( #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+             #{status,jdbcType=INTEGER}, #{cardid,jdbcType=INTEGER}, #{phonenumber,jdbcType=INTEGER},
+             #{headpic,jdbcType=LONGVARBINARY})
+  </insert>
+
+  <delete id="deleteByPrimaryKeyStu" parameterType="java.lang.Integer">
+    delete u,a from user as u LEFT JOIN student as a ON u.userid = a.userid WHERE u.userid= #{param1}
+  </delete>
+
+  <delete id="deleteByPrimaryKeyTea" parameterType="java.lang.Integer">
+    delete u,a from user as u LEFT JOIN teacher as a ON u.userid = a.userid WHERE u.userid= #{param1}
+  </delete>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user WHERE userid= #{param1}
+  </delete>
+
+  <insert id="insert" parameterType="com.example.gymnasium.entity.user">
+    insert into user (userid, username, password,
+                      status, cardid, phonenumber,
+                      headpic)
+    values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+            #{status,jdbcType=INTEGER}, #{cardid,jdbcType=INTEGER}, #{phonenumber,jdbcType=INTEGER},
+            #{headpic,jdbcType=LONGVARBINARY})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.example.gymnasium.entity.user">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="cardid != null">
+        cardid,
+      </if>
+      <if test="phonenumber != null">
+        phonenumber,
+      </if>
+      <if test="headpic != null">
+        headpic,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="cardid != null">
+        #{cardid,jdbcType=INTEGER},
+      </if>
+      <if test="phonenumber != null">
+        #{phonenumber,jdbcType=INTEGER},
+      </if>
+      <if test="headpic != null">
+        #{headpic,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.gymnasium.entity.user">
+    update user
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="cardid != null">
+        cardid = #{cardid,jdbcType=INTEGER},
+      </if>
+      <if test="phonenumber != null">
+        phonenumber = #{phonenumber,jdbcType=INTEGER},
+      </if>
+      <if test="headpic != null">
+        headpic = #{headpic,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where userid = #{param1}
+  </update>
+
+  <update id="updateByName" parameterType="com.example.gymnasium.entity.user">
+    update user
+    set username = #{username,jdbcType=VARCHAR}
+    where userid = #{userid,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPwd" parameterType="com.example.gymnasium.entity.user">
+    update user
+    set password = #{password,jdbcType=VARCHAR}
+    where userid = #{userid,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPhonenumber" parameterType="com.example.gymnasium.entity.user">
+    update user
+    set phonenumber = #{phonenumber,jdbcType=INTEGER}
+    where userid = #{userid,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByCardid" parameterType="com.example.gymnasium.entity.user">
+    update user
+    set cardid = #{cardid,jdbcType=INTEGER}
+    where userid = #{userid,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByStatus" parameterType="com.example.gymnasium.entity.user">
+    update user
+    set status = #{status,jdbcType=INTEGER}
+    where userid = #{userid,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByHeadpic" parameterType="com.example.gymnasium.entity.user">
+    update user
+    set headpic = #{headpic,jdbcType=LONGVARBINARY}
+    where userid = #{userid,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.gymnasium.entity.user">
+    update user
+    set username = #{username,jdbcType=VARCHAR},
+        password = #{password,jdbcType=VARCHAR},
+        status = #{status,jdbcType=INTEGER},
+        cardid = #{cardid,jdbcType=INTEGER},
+        phonenumber = #{phonenumber,jdbcType=INTEGER},
+        headpic = #{headpic,jdbcType=LONGVARBINARY}
+    where userid = #{userid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.gymnasium.entity.user">
+    update user
+    set username = #{username,jdbcType=VARCHAR},
+        password = #{password,jdbcType=VARCHAR},
+        status = #{status,jdbcType=INTEGER},
+        cardid = #{cardid,jdbcType=INTEGER},
+        phonenumber = #{phonenumber,jdbcType=INTEGER}
+    where userid = #{userid,jdbcType=INTEGER}
+  </update>
+
+</mapper>
